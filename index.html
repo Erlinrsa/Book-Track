@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Track</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: "#0b1f4d",
+            brand: "#1467f5",
+            "brand-dark": "#0f4fc4",
+            soft: "#eaf2ff",
+            sun: "#ffcf3f",
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-[#f5f8ff] text-slate-700 antialiased overflow-x-hidden">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 border-b border-blue-100 bg-white/90 backdrop-blur">
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-3">
+      <img src="logo.png" alt="Logo Book Track" class="h-10 w-auto">
+
+      <button id="menu-btn" type="button" aria-expanded="false" aria-controls="menu"
+        class="rounded-lg border border-blue-100 px-3 py-2 text-navy hover:bg-soft md:hidden">
+        <span class="sr-only">Buka menu</span>
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <nav class="w-full md:w-auto">
+        <ul id="menu" class="hidden flex-col gap-1 pt-2 md:flex md:flex-row md:pt-0">
+          <li><a href="#hero" class="block rounded-full px-4 py-2 text-sm font-medium text-navy transition hover:bg-soft hover:text-brand">Beranda</a></li>
+          <li><a href="#tambah" class="block rounded-full px-4 py-2 text-sm font-medium text-navy transition hover:bg-soft hover:text-brand">Tambah Buku</a></li>
+          <li><a href="#daftar" class="block rounded-full px-4 py-2 text-sm font-medium text-navy transition hover:bg-soft hover:text-brand">Daftar Buku</a></li>
+          <li><a href="#cari" class="block rounded-full px-4 py-2 text-sm font-medium text-navy transition hover:bg-soft hover:text-brand">Pencarian</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="mx-auto grid max-w-5xl gap-6 px-4 py-8 md:gap-8">
+
+    <section id="hero" class="scroll-mt-28 rounded-2xl border border-blue-100 bg-gradient-to-br from-soft to-white px-5 py-12 text-center shadow-lg shadow-navy/5 md:py-20">
+      <h1 class="text-4xl font-extrabold leading-tight text-navy md:text-6xl">Book Track</h1>
+      <p class="mx-auto mt-3 max-w-xl text-base text-slate-500 md:text-lg">
+        Catat koleksi bukumu dan pantau status bacanya dengan mudah.
+      </p>
+
+      <dl class="mx-auto mt-8 grid max-w-2xl grid-cols-2 gap-3 md:grid-cols-4">
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-blue-100">
+          <dd id="stat-total" class="text-2xl font-bold text-navy">0</dd>
+          <dt class="text-xs text-slate-500">Total buku</dt>
+        </div>
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-blue-100">
+          <dd id="stat-belum" class="text-2xl font-bold text-slate-600">0</dd>
+          <dt class="text-xs text-slate-500">Belum dibaca</dt>
+        </div>
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-blue-100">
+          <dd id="stat-sedang" class="text-2xl font-bold text-amber-500">0</dd>
+          <dt class="text-xs text-slate-500">Sedang dibaca</dt>
+        </div>
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-blue-100">
+          <dd id="stat-selesai" class="text-2xl font-bold text-emerald-600">0</dd>
+          <dt class="text-xs text-slate-500">Sudah selesai</dt>
+        </div>
+      </dl>
+    </section>
+
+    <section id="tambah" class="scroll-mt-28 rounded-2xl border border-blue-100 bg-white p-5 shadow-lg shadow-navy/5 md:p-9">
+      <h2 class="mb-5 text-2xl font-bold text-navy">Tambah Buku</h2>
+      <form id="add-form" novalidate class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <input id="title" name="title" type="text" placeholder="Judul buku" required
+          class="w-full rounded-xl border-[1.5px] border-blue-100 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-brand focus:ring-4 focus:ring-brand/15">
+        <input id="author" name="author" type="text" placeholder="Penulis" required
+          class="w-full rounded-xl border-[1.5px] border-blue-100 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-brand focus:ring-4 focus:ring-brand/15">
+        <select id="status" name="status"
+          class="w-full cursor-pointer rounded-xl border-[1.5px] border-blue-100 bg-white px-4 py-3 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/15">
+          <option>Belum dibaca</option>
+          <option>Sedang dibaca</option>
+          <option>Sudah selesai</option>
+        </select>
+        <button type="submit"
+          class="w-full rounded-xl bg-sun px-4 py-3 font-semibold text-navy transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-lg active:translate-y-0">
+          Tambah
+        </button>
+      </form>
+      <p id="form-message" role="status" aria-live="polite" class="mt-3 min-h-[1.5rem] text-sm"></p>
+    </section>
+
+    <section id="cari" class="scroll-mt-28 rounded-2xl border border-blue-100 bg-white p-5 shadow-lg shadow-navy/5 md:p-9">
+      <h2 class="mb-5 text-2xl font-bold text-navy">Pencarian Buku</h2>
+      <form id="search-form" class="grid gap-3 sm:grid-cols-[1fr_auto]">
+        <input id="search-input" type="text" placeholder="Cari judul, penulis, atau status..."
+          class="w-full rounded-xl border-[1.5px] border-blue-100 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-brand focus:ring-4 focus:ring-brand/15">
+        <button type="submit"
+          class="w-full rounded-xl bg-brand px-7 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-lg active:translate-y-0 sm:w-auto">
+          Cari
+        </button>
+      </form>
+    </section>
+
+    <section id="daftar" class="scroll-mt-28 rounded-2xl border border-blue-100 bg-white p-5 shadow-lg shadow-navy/5 md:p-9">
+      <h2 class="mb-5 text-2xl font-bold text-navy">Daftar Buku</h2>
+      <div id="book-list" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+      <p id="empty-message" class="hidden rounded-xl bg-soft p-6 text-center text-slate-500">
+        Belum ada buku yang cocok. Coba kata kunci lain atau tambahkan buku baru.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy px-4 py-7 text-center text-sm text-blue-200">
+    <p>&copy; 2026 Book Track. Semua hak dilindungi.</p>
+    <p class="mt-1 text-sun">Kontak: info@booktrack.id</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
