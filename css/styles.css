@@ -1,0 +1,110 @@
+/* Google Fonts: Playfair Display for headings & Inter for UI */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&display=swap');
+
+:root {
+--font-serif: 'Playfair Display', Georgia, serif;
+--font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.dark body {
+  background-color: #0b1120;
+  color: #f1f5f9;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+/* Book Cover 3D Depth Effect */
+.book-card {
+  perspective: 1000px;
+}
+
+.book-card > div:first-child {
+  position: relative;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.book-card:hover > div:first-child {
+  box-shadow: 0 14px 28px -4px rgba(0, 0, 0, 0.22), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+}
+
+/* Book spine highlight on left edge */
+.book-card > div:first-child::before,
+#live-preview-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to right, rgba(255,255,255,0.25), rgba(0,0,0,0.1));
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  pointer-events: none; /* FIX: sebelumnya "pointer-events-none;" (gaya Tailwind, tidak valid di CSS) */
+  z-index: 20;
+}
+
+/* Strict boundary enforcement for live preview and book cover images */
+#live-preview-card {
+  position: relative !important;
+  overflow: hidden !important;
+  max-width: 12rem !important;
+  max-height: 18rem !important;
+}
+
+#preview-cover-img,
+.live-cover-img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Custom transition for views */
+.view-container {
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
