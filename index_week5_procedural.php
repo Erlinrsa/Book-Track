@@ -12,7 +12,7 @@
  * ========================================================================= */
 $appName       = "BookTrack";
 $pageTitle     = "Pelacak Buku & Program Prioritas Bacaan";
-$userName      = "Eko Felix"; // Nama pengguna / pembaca (sesuai tema)
+$userName      = "Erlin Mariska"; // Nama pengguna / pembaca (sesuai tema)
 $userRole      = "Pembaca Prioritas";
 $targetTahun   = 12;
 $tahunIni      = date("Y");

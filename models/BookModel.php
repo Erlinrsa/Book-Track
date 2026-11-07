@@ -9,7 +9,7 @@ class BookModel {
      * Mengambil instance profil pembaca saat ini
      */
     public static function getUser(): User {
-        return new User("Eko Felix", "Pembaca Prioritas", 12);
+        return new User("Erlin Mariska", "Pembaca Prioritas", 12);
     }
 
     /**

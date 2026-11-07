@@ -6,8 +6,8 @@ Aplikasi web pelacak buku dan kebiasaan membaca modern yang dibangun dan dikemba
 
 ## 👥 Tim Pengembang (Kelompok 2 Orang)
 
-   * **Kontributor 1 (Member A):** Erlin Mariska *(Product & Core Logic)*
-   * **Kontributor 2 (Member B):** Muhammad Arsyad Al Hakim *(UI/UX & Integration)*
+* **Kontributor 1 (Member A):** Erlin Mariska *(Product & Core Logic)*
+* **Kontributor 2 (Member B):** Partner Tim *(UI/UX & Integration)*
 
 ---
 

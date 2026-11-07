@@ -52,7 +52,7 @@ class User {
     }
 
     /**
-     * Method untuk menghasilkan inisial avatar (misal: "Eko Felix" -> "EF")
+     * Method untuk menghasilkan inisial avatar (misal: "Erlin Mariska" -> "EF")
      */
     public function getInitials(): string {
         $words = explode(" ", $this->name);
@@ -284,7 +284,7 @@ class BookTracker {
  * ========================================================================= */
 
 // 1. Instansiasi Object User
-$currentUser = new User("Eko Felix", "Pembaca Prioritas", 12);
+$currentUser = new User("Erlin Mariska", "Pembaca Prioritas", 12);
 
 // 2. Instansiasi Daftar Object Book
 $bookObjects = [
