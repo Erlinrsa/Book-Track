@@ -1,28 +1,39 @@
 <?php
 /**
  * =========================================================================
- * SPRINT 06 (WEEK 7) - FROM OOP TO MVC ARCHITECTURE
- * Tema Project : BookTrack - Pelacak Buku & Program Prioritas
- * Sesuai Modul Pertemuan 7: Model - View - Controller (MVC)
+ * SPRINT 07 (WEEK 9) - LARAVEL + CRUD + DATABASE
+ * Tema Project : BookTrack & PresidentKu Data Management
+ * Sesuai Modul Pertemuan 9: Model, Eloquent ORM, Migration, CRUD Database
  * =========================================================================
- * 
- * ALUR APLIKASI (MVC FLOW):
- * 1. User mengirim HTTP Request ke index.php
- * 2. index.php (Front Controller) memanggil BookController
- * 3. BookController menerima request, memanggil BookModel & User
- * 4. Model mengolah data, filter, dan kalkulasi statistik
- * 5. Controller mengirimkan data hasil olahan ke View (views/book-page.php)
- * 6. View me-render tampilan HTML dan mengirimkannya kembali ke Browser User
  */
 
-// 1. Load Models
-require_once __DIR__ . '/models/User.php';
-require_once __DIR__ . '/models/Book.php';
-require_once __DIR__ . '/models/BookModel.php';
+define('LARAVEL_START', microtime(true));
 
-// 2. Load Controller
-require_once __DIR__ . '/controllers/BookController.php';
+// 1. Load Core Engine & Models
+require_once __DIR__ . '/app/Core/Engine.php';
+require_once __DIR__ . '/app/Models/Program.php';
+require_once __DIR__ . '/app/Models/Book.php';
 
-// 3. Dispatch Request ke Controller
-$controller = new BookController();
-$controller->index();
+// 2. Auto-initialize Database and Migrations if needed
+if (!file_exists(__DIR__ . '/database/database.json')) {
+    $migrationFiles = glob(__DIR__ . '/database/migrations/*.php');
+    sort($migrationFiles);
+    foreach ($migrationFiles as $file) {
+        $migration = require $file;
+        if (is_object($migration) && method_exists($migration, 'up')) {
+            $migration->up();
+        }
+    }
+    require_once __DIR__ . '/database/seeders/ProgramSeeder.php';
+    require_once __DIR__ . '/database/seeders/DatabaseSeeder.php';
+    (new \Database\Seeders\DatabaseSeeder())->run();
+}
+
+// 3. Load Routes
+require_once __DIR__ . '/routes/web.php';
+
+// 4. Dispatch Request
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$uri    = $_SERVER['REQUEST_URI'] ?? '/';
+
+\Illuminate\Support\Facades\Route::dispatch($method, $uri);
