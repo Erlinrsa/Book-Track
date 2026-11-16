@@ -1,0 +1,82 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+// Load Engine & Models
+require_once __DIR__ . '/app/Core/Engine.php';
+require_once __DIR__ . '/app/Models/Program.php';
+require_once __DIR__ . '/app/Models/Book.php';
+require_once __DIR__ . '/database/seeders/ProgramSeeder.php';
+require_once __DIR__ . '/database/seeders/DatabaseSeeder.php';
+require_once __DIR__ . '/routes/web.php';
+
+$argv = $_SERVER['argv'] ?? [];
+$command = $argv[1] ?? 'help';
+
+echo "
+   __                                 _ 
+  / /   __ _ _ __ __ ___   _____  ___| |
+ / /   / _` | '__/ _` \ \ / / _ \/ __| |
+/ /___| (_| | | | (_| |\ V /  __/ (__|_|
+\____/ \__,_|_|  \__,_| \_/ \___|\___(_)
+BookTrack & PresidentKu CLI (Sprint 07 - Week 9)
+=================================================
+";
+
+switch ($command) {
+    case 'migrate':
+        echo "\n[INFO] Running migrations...\n";
+        $migrationFiles = glob(__DIR__ . '/database/migrations/*.php');
+        sort($migrationFiles);
+        foreach ($migrationFiles as $file) {
+            $filename = basename($file);
+            echo "  > Migrating: $filename\n";
+            $migration = require $file;
+            if (is_object($migration) && method_exists($migration, 'up')) {
+                $migration->up();
+            }
+            echo "  > Migrated:  $filename\n";
+        }
+        echo "\n[SUCCESS] Migration table 'programs' & 'books' created successfully in database!\n";
+        break;
+
+    case 'db:seed':
+        echo "\n[INFO] Seeding database with initial data (Slide 13)...\n";
+        (new \Database\Seeders\DatabaseSeeder())->run();
+        echo "[SUCCESS] Database seeding completed successfully!\n";
+        break;
+
+    case 'route:list':
+        echo "\n[INFO] Registered Routes (routes/web.php):\n";
+        echo str_repeat('-', 60) . "\n";
+        printf("%-8s | %-30s\n", "METHOD", "URI");
+        echo str_repeat('-', 60) . "\n";
+        foreach (\Illuminate\Support\Facades\Route::$routes as $method => $routes) {
+            foreach ($routes as $uri => $action) {
+                printf("%-8s | %-30s\n", $method, $uri);
+            }
+        }
+        echo str_repeat('-', 60) . "\n";
+        break;
+
+    case 'serve':
+        $host = '127.0.0.1';
+        $port = '8000';
+        if (isset($argv[2]) && str_starts_with($argv[2], '--port=')) {
+            $port = substr($argv[2], 7);
+        }
+        echo "\n[INFO] Starting Laravel development server: http://$host:$port\n";
+        echo "[INFO] Press Ctrl+C to stop the server.\n\n";
+        passthru("php -S $host:$port index.php");
+        break;
+
+    case 'help':
+    default:
+        echo "Available commands:\n";
+        echo "  migrate        Run the database migrations (Task 01)\n";
+        echo "  db:seed        Seed the database with initial records\n";
+        echo "  route:list     List all registered routes\n";
+        echo "  serve          Serve the application on the PHP development server\n";
+        break;
+}

@@ -1,0 +1,22 @@
+{
+    "name": "erlinrsa/booktrack-laravel",
+    "type": "project",
+    "description": "BookTrack & PresidentKu Data Management - Laravel + CRUD + Database (Sprint 07 / Week 9)",
+    "keywords": ["laravel", "framework", "crud", "database", "eloquent", "migration"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    }
+}
